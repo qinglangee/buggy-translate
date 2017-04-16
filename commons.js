@@ -1,4 +1,4 @@
-var logLevel = 1;
+var logLevel = 0;
 var DEBUG = 0;
 var INFO = 1;
 var WARN = 2;

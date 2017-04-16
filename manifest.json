@@ -6,6 +6,11 @@
 
   "description": "a browser extension to translate words selected in  page",
   "homepage_url": "https://github.com/qinglangee/buggy-translate",
+  "applications": {
+    "gecko": {
+      "id": "buggy-translate@xmalloc.com"
+    }
+  },
   "icons": {
     "48": "icons/bug-48.png",
     "96": "icons/bug-96.png"
