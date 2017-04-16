@@ -27,17 +27,17 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["jquery-3.2.1.min.js",
-        "string_utils.js",
-        "commons.js",
-        "dict_view.js",
-        "dictionary.js"],
-      "css": ["dictionary.css"]
+      "js": ["lib/jquery-3.2.1.min.js",
+        "src/string_utils.js",
+        "src/commons.js",
+        "src/dict_view.js",
+        "src/dictionary.js"],
+      "css": ["src/dictionary.css"]
     }
   ],
 
   "options_ui": {
-    "page": "options.html"
+    "page": "html/options.html"
   },
 
   "browser_action": {
