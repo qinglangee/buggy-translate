@@ -41,6 +41,7 @@ function fillDictContent(word){
     }
 
 }
+// 清空浮动框显示内容
 function clearDictContent(){
     dictRef.text.html("");
     dictRef.pronounce.html("");
@@ -61,6 +62,13 @@ function loadPage(){
         dictRef.translate = dictBox.find(".translate")
         debug("dict box:", dictBox)
         $("body").append(dictBox);
+
+        // 设置浮动框　z-index
+        var maxZ = Math.max.apply(null,$.map($('body > *'), function(e,n){
+            var zIndex = $(e).css("z-index");
+            return !isNaN(zIndex) ? parseInt(zIndex) : 1;
+        }));
+        dictBox.css("z-index", maxZ);
     },"html")
 }
 
