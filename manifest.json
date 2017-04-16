@@ -1,0 +1,48 @@
+{
+
+  "manifest_version": 2,
+  "name": "buggy-translate",
+  "version": "1.0",
+
+  "description": "a browser extension to translate words selected in  page",
+  "homepage_url": "https://github.com/qinglangee/buggy-translate",
+  "icons": {
+    "48": "icons/bug-48.png",
+    "96": "icons/bug-96.png"
+  },
+
+  "permissions": [
+    "activeTab",
+    "storage",
+    "*://dict.youdao.com/*",
+    "*://www.baidu.com/*",
+    "*://cn.bing.com/*"
+  ],
+  
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["jquery-3.2.1.min.js",
+        "string_utils.js",
+        "commons.js",
+        "dict_view.js",
+        "dictionary.js"],
+      "css": ["dictionary.css"]
+    }
+  ],
+
+  "options_ui": {
+    "page": "options.html"
+  },
+
+  "browser_action": {
+    "default_icon": "icons/bug-32.png",
+    "default_title": "buggy",
+    "default_popup": "popup/quick_search.html"
+  },
+
+  "web_accessible_resources": [
+    "html/component.html"
+  ]
+
+}
