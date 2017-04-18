@@ -2,6 +2,7 @@ var dictBox;
 var dictRef={};
 var pastBox;
 var dictTimer;
+var mouseInDict = false;
 
 // 显示单词释义，定时后隐藏
 function showWord(word){
@@ -68,7 +69,16 @@ function loadPage(){
             var zIndex = $(e).css("z-index");
             return !isNaN(zIndex) ? parseInt(zIndex) : 1;
         }));
-        dictBox.css("z-index", maxZ);
+        dictBox.css("z-index", maxZ); // 设置显示在最上层
+
+        // 鼠标在上方时，不消失
+        dictBox.mouseover(function(){
+            clearTimeout(dictTimer);
+        }).mouseout(function(){
+            dictTimer = setTimeout(function(){
+                dictBox.addClass("dict_hide");
+            }, 3000);
+        });
     },"html")
 }
 
