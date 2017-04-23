@@ -79,6 +79,11 @@ function loadPage(){
                 dictBox.addClass("dict_hide");
             }, 3000);
         });
+
+        // 关闭浮动框
+        $(".title_div .close", dictBox).click(function(){
+            dictBox.addClass("dict_hide");
+        });
     },"html")
 }
 

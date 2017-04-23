@@ -5,6 +5,10 @@
     border-radius:10px;
     padding:10px;
 }
+.clear{clear:both;}
+#buggy_dict_box .title_div{position:relative}
+#buggy_dict_box .title_div .title{color:#4B4943;position:float;float:left;}
+#buggy_dict_box .title_div .close{color:#4B4943;position:float;float:right;}
 #buggy_dict_box .text{color:#B89471}
 #buggy_dict_box .pronounce{color:#81915A}
 #buggy_dict_box .translate{color:#84A095}
