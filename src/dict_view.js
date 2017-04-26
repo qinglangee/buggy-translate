@@ -87,10 +87,12 @@
             $("html").append(dictBox);
 
             // 设置浮动框　z-index
-            var maxZ = Math.max.apply(null,$.map($('body > *'), function(e,n){
-                var zIndex = $(e).css("z-index");
-                return !isNaN(zIndex) ? parseInt(zIndex) : 1;
-            }));
+            // 有bug, 取不到最大值　https://www.zhihu.com/question/52284255/answer/130343309
+            // var maxZ = Math.max.apply(null,$.map($('body > *'), function(e,n){
+            //     var zIndex = $(e).css("z-index");
+            //     return !isNaN(zIndex) ? parseInt(zIndex) : 1;
+            // }));
+            maxZ = 2147483647; // 直接设置成数值上限吧
             dictBox.css("z-index", maxZ); // 设置显示在最上层
 
             // 鼠标在上方时，不消失
