@@ -2,7 +2,7 @@
 
     "manifest_version": 2,
     "name": "buggy-translate",
-    "version": "0.0.7",
+    "version": "0.1.0",
 
     "description": "a browser extension to translate words selected in  page",
     "homepage_url": "https://github.com/qinglangee/buggy-translate",
