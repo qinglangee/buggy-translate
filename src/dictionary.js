@@ -18,6 +18,18 @@
     var St = StringUtils;
     var L = ZhchLog;
     var View = DictionaryView;
+    var G = {};
+    G.api = "youdao"; // 默认值为 youdao
+    var API = {
+        "youdao":{
+            url:"http://dict.youdao.com/search",
+            data:{"keyfrom":"dict.index","q":"word"}
+        },
+        "bing":{
+            url:"http://cn.bing.com/dict/search",
+            data:{"q":"word"}
+        }
+    };
 
 
     // 检查是否要查字典
@@ -54,20 +66,65 @@
     // 查询单词
     _.searchWord = function(text, isPop){
         L.debug("search text:" + text);
+        
+        // TODO 无法获得配置更新信息，只好先每次都重新读取
+        loadOptions();
+        
+        
         View.showMsg("正在查词:" + text + "...");
         
-        var url = "http://dict.youdao.com/search";
-        var data = {"keyfrom":"dict.index","q":text};
-        $.get(url,data, function(html){
+        var api = API[G.api];
+        api.data.q = text;
+        $.get(api.url,api.data, function(html){
             // L.debug("get html:", html);
-            var word = _.parseWord(html);
+            var word = parseWord(html);
             L.debug("word is:", word);
             View.showWord(word, isPop);
         },"html");
     }
+    function parseWord(html){
+        if(G.api == "youdao"){
+            return parseYoudaoWord(html);
+        }else{
+            return parseBingWord(html);
+        }
+    }
+    function parseBingWord(htmlStr){
+        var html = $(htmlStr);
+        var container = html.find(".qdef");
+        // 单词
+        var headword = container.find("#headword h1");
+        var text = St.trim(headword.text());
+        // 发音
+        var pronounce = [];
+        // 美音
+        var usText = container.find(".hd_prUS").text();
+        if(usText.indexOf("[") > 0){
+            var usName = usText.substring(0,usText.indexOf("["));
+            var usPron = usText.substring(usText.indexOf("["));
+            pronounce[pronounce.length] = {"name":usName, "text":usPron};
+        }
+        // 英音
+        var ukText = container.find(".hd_pr").text();
+        if(ukText.indexOf("[") > 0){
+            var ukName = ukText.substring(0,ukText.indexOf("["));
+            var ukPron = ukText.substring(ukText.indexOf("["));
+            pronounce[pronounce.length] = {"name":ukName, "text":ukPron};
+        }
+        // 解释
+        var translate = [];
+        var transText = container.find("ul>li");
+        for(var i=0;i<transText.length;i++){
+            translate[translate.length] = St.trim($(transText[i]).text());
+        }
+        
+        // word 数据结构
+        var word = {"text":text, "pronounce":pronounce, "translate":translate};
+        return word;
+    }
 
     // 从页面解析出单词数据
-    _.parseWord = function(htmlStr){
+    function parseYoudaoWord(htmlStr){
         var html = $(htmlStr);
         // 单词
         var keyword = html.find(".keyword");
@@ -94,6 +151,41 @@
         return word;
     }
 
+    // 加载配置
+    function loadOptions(){
+        L.debug("dict loadOptions");
+        function onError(error) {
+            console.error(`Error: ${error}`);
+        }
+
+        function onGot(item) {
+            var single = item.single;
+            if(single == null){
+                return;
+            }
+            L.debug("load single is ",single);
+            G.api = single.api || G.api;
+
+            if(single.box_location != null){
+                var atCorner = "corner" == single.box_location;
+                View.setOptions({"atCorner":atCorner});
+            }
+        }
+
+        var getting = browser.storage.local.get("single");
+        getting.then(onGot, onError);
+    }
+    
+    _.init = function(){
+        loadOptions();
+        
+        // TODO 暂时通信失败
+        // browser.runtime.onMessage.addListener(function(message){
+        //     if(message.type == "change_option"){
+        //         loadOptions();
+        //     }
+        // });
+    }
 
 
 

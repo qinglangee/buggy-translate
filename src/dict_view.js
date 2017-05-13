@@ -22,37 +22,61 @@
     var mouseInDict = false;
     var winTop = null;
     var G = {};
+    G.mouse = {}; // 记录点击位置
     G.isPop = false; // 记录是在弹出窗口还是普通页面
+    G.atCorner = false; // true:在右上角显示，　否则鼠标旁边显示
     _.init = function(wnd, isPop){
         winTop = wnd;
         G.isPop = isPop
     }
+    // 更新设置项
+    _.setOptions = function(options){
+        if(options != null){
+            for(var key in options){
+                G[key] = options[key];
+            }
+            L.debug("set option, G is", G);
+        }
+    }
     // 启动关闭浮动框的计时器
     function startTimer(){
-        
         if(dictTimer != null){
             clearTimeout(dictTimer);
         }
         if(!G.isPop){
             dictTimer = setTimeout(function(){
-                dictBox.addClass("dict_hide");
+                hideBox();
             }, 9000);
         }
+    }
+    
+    // 浮动框的定位和显示
+    function showBox(){
+        dictBox.removeClass("dict_hide");
+        if(G.atCorner){
+            dictBox.css({"top":"10px", "right":"10px", "left":""});
+        }else{
+            dictBox.css({"top":G.mouse.y + "px", "left":G.mouse.x + "px", "right":""});
+        }
+    }
+    // 浮动框隐藏
+    function hideBox(){
+        dictBox.addClass("dict_hide");
     }
 
     // 显示单词释义，定时后隐藏
     _.showWord = function(word){
         L.debug("fun showWord:", dictBox);
-        dictBox.removeClass("dict_hide");
         _.fillDictContent(word);
+        showBox();
         startTimer();
     }
     // 显示正在查词，定时后隐藏
     _.showMsg = function(msg){
         L.debug("fun showMsg:", msg);
         _.clearDictContent();
-        dictBox.removeClass("dict_hide");
         dictRef.msg.html(msg);
+        showBox();
         startTimer();
     }
 
@@ -147,6 +171,12 @@
         dictBox.removeClass("dict_hide");
         dictBox.find(".title_div").addClass("dict_hide")
         $("#pop_box").append(dictBox);
+    }
+    
+    // 记录鼠标位置
+    _.mouse = function(x, y){
+        G.mouse.x = x;
+        G.mouse.y = y;
     }
 
 

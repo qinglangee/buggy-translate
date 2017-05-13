@@ -1,54 +1,53 @@
 {
 
-  "manifest_version": 2,
-  "name": "buggy-translate",
-  "version": "0.0.7",
+    "manifest_version": 2,
+    "name": "buggy-translate",
+    "version": "0.0.7",
 
-  "description": "a browser extension to translate words selected in  page",
-  "homepage_url": "https://github.com/qinglangee/buggy-translate",
-  "applications": {
-    "gecko": {
-      "id": "buggy-translate@xmalloc.com"
-    }
-  },
-  "icons": {
-    "48": "icons/bug-48.png",
-    "96": "icons/bug-96.png"
-  },
+    "description": "a browser extension to translate words selected in  page",
+    "homepage_url": "https://github.com/qinglangee/buggy-translate",
+    "applications": {
+        "gecko": {
+            "id": "buggy-translate@xmalloc.com"
+        }
+    },
+    "icons": {
+        "48": "icons/bug-48.png",
+        "96": "icons/bug-96.png"
+    },
 
-  "permissions": [
-    "activeTab",
-    "storage",
-    "*://dict.youdao.com/*",
-    "*://www.baidu.com/*",
-    "*://cn.bing.com/*"
-  ],
-  
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "js": ["lib/jquery-3.2.1.min.js",
-        "src/string_utils.js",
-        "src/zhchlog.js",
-        "src/dict_view.js",
-        "src/dictionary.js",
-        "src/init.js"],
-      "css": ["src/dictionary.css"]
-    }
-  ],
+    "permissions": [
+        "activeTab",
+        "storage",
+        "*://dict.youdao.com/*",
+        "*://www.baidu.com/*",
+        "*://cn.bing.com/*"
+    ],
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["lib/jquery-3.2.1.min.js",
+                "src/string_utils.js",
+                "src/zhchlog.js",
+                "src/dict_view.js",
+                "src/dictionary.js",
+                "src/init.js"],
+            "css": ["src/dictionary.css"]
+        }
+    ],
 
-  "options_ui": {
-    "page": "html/options.html"
-  },
+    "options_ui": {
+        "page": "option/option.html"
+    },
 
-  "browser_action": {
-    "default_icon": "icons/bug-32.png",
-    "default_title": "buggy",
-    "default_popup": "popup/quick_search.html"
-  },
+    "browser_action": {
+        "default_icon": "icons/bug-32.png",
+        "default_title": "buggy",
+        "default_popup": "popup/quick_search.html"
+    },
 
-  "web_accessible_resources": [
-    "html/component.html"
-  ]
+    "web_accessible_resources": [
+        "html/component.html"
+    ]
 
 }

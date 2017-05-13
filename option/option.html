@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+    </head>
+
+    <body>
+        <form class="" action="index.html" method="post">
+            
+            <table>
+                <tr>
+                    <td>查词翻译API:</td>
+                    <td>
+                        <input class="single_choice" type="radio" name="api" id="youdao" value="youdao" checked="true"/>
+                        <lable for="youdao">有道词典</lable>
+                        <input class="single_choice" type="radio" name="api" id="bing" value="bing"/>
+                        <lable for="biying">必应词典</lable>
+                    </td>
+                </tr>
+                <tr>
+                    <td>翻译结果显示位置:</td>
+                    <td>
+                        <input class="single_choice" type="radio" name="box_location" id="corner" value="corner" checked="true"/>
+                        <lable for="corner">右上角</lable>
+                        <input class="single_choice" type="radio" name="box_location" id="nearby" value="nearby"/>
+                        <lable for="nearby">单词旁边</lable>
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+    </body>
+    <!-- <script type="text/javascript">
+        console.log("0000001");
+        console.log(browser);
+        console.log("0000002");
+    </script> -->
+    <script src="../lib/jquery-3.2.1.min.js"></script>
+    <script src="../src/zhchlog.js"></script>
+    <script src="./option.js"></script>
+
+</html>
