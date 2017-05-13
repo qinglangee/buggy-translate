@@ -52,7 +52,7 @@
     // }
 
     // 查询单词
-    _.searchWord = function(text){
+    _.searchWord = function(text, isPop){
         L.debug("search text:" + text);
         var url = "http://dict.youdao.com/search";
         var data = {"keyfrom":"dict.index","q":text};
@@ -60,7 +60,7 @@
             // L.debug("get html:", html);
             var word = _.parseWord(html);
             L.debug("word is:", word);
-            View.showWord(word);
+            View.showWord(word, isPop);
         },"html");
     }
 
@@ -108,18 +108,3 @@
         root.Dictionary = _;
     }
 }).call(this);
-
-
-// 启动插件监听
-// $("body").on("click", checkSelection);
-$(document).on("click", function(){
-    Dictionary.checkSelection(window);
-});
-
-// frame 要分别注册事件，因为　getSelection() 取不到frame中选中的内容　(spring javadoc 页面)
-for (var i = 0; i < window.frames.length; i++){
-    var thisFrame = window.frames[i];
-    $(window.frames[i].document).on("click", function(){
-        Dictionary.checkSelection(thisFrame);
-    })
-}

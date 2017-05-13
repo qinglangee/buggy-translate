@@ -16,7 +16,7 @@
     var L = ZhchLog;
 
     var dictBox;
-    var dictRef={};
+    var dictRef={}; // 持有各个组件的引用
     var pastBox;
     var dictTimer;
     var mouseInDict = false;
@@ -26,16 +26,18 @@
     }
 
     // 显示单词释义，定时后隐藏
-    _.showWord = function(word){
+    _.showWord = function(word, isPop){
         L.debug("inshow:", dictBox);
         dictBox.removeClass("dict_hide");
         _.fillDictContent(word);
         if(dictTimer != null){
             clearTimeout(dictTimer);
         }
-        dictTimer = setTimeout(function(){
-            dictBox.addClass("dict_hide");
-        }, 9000);
+        if(!isPop){
+            dictTimer = setTimeout(function(){
+                dictBox.addClass("dict_hide");
+            }, 9000);
+        }
     }
 
     // 单词内容填充页面
@@ -71,7 +73,7 @@
     }
 
     // 加载页面内容
-    _.loadPage = function(){
+    _.loadPage = function(isPop){
         var viewUrl = browser.runtime.getURL("html/component.html");
         L.debug("viewUrl:", viewUrl);
         $.get(viewUrl, function(resp){
@@ -80,35 +82,54 @@
             L.debug("all:", all)
             dictBox = all.find("#buggy_dict_box");
 
-            dictRef.text = dictBox.find(".text")
-            dictRef.pronounce = dictBox.find(".pronounce")
-            dictRef.translate = dictBox.find(".translate")
-            L.debug("dict box:", dictBox)
-            $("html").append(dictBox);
+            dictRef.text = dictBox.find(".text");
+            dictRef.pronounce = dictBox.find(".pronounce");
+            dictRef.translate = dictBox.find(".translate");
+            L.debug("dict box:", dictBox);
 
-            // 设置浮动框　z-index
-            // 有bug, 取不到最大值　https://www.zhihu.com/question/52284255/answer/130343309
-            // var maxZ = Math.max.apply(null,$.map($('body > *'), function(e,n){
-            //     var zIndex = $(e).css("z-index");
-            //     return !isNaN(zIndex) ? parseInt(zIndex) : 1;
-            // }));
-            maxZ = 2147483647; // 直接设置成数值上限吧
-            dictBox.css("z-index", maxZ); // 设置显示在最上层
-
-            // 鼠标在上方时，不消失
-            dictBox.mouseover(function(){
-                clearTimeout(dictTimer);
-            }).mouseout(function(){
-                dictTimer = setTimeout(function(){
-                    dictBox.addClass("dict_hide");
-                }, 3000);
-            });
-
-            // 关闭浮动框
-            $(".title_div .close", dictBox).click(function(){
-                dictBox.addClass("dict_hide");
-            });
+            
+            if(isPop){
+                _.initPop();
+            }else{
+                _.initPage();
+            }
+            
         },"html")
+    }
+    
+    // 普通页面的初始化
+    _.initPage = function(){
+        // 设置浮动框　z-index
+        // 有bug, 取不到最大值　https://www.zhihu.com/question/52284255/answer/130343309
+        // var maxZ = Math.max.apply(null,$.map($('body > *'), function(e,n){
+        //     var zIndex = $(e).css("z-index");
+        //     return !isNaN(zIndex) ? parseInt(zIndex) : 1;
+        // }));
+        
+        maxZ = 2147483647; // 直接设置成数值上限吧
+        dictBox.css("z-index", maxZ); // 设置显示在最上层
+        // 鼠标在上方时，不消失
+        dictBox.mouseover(function(){
+            clearTimeout(dictTimer);
+        }).mouseout(function(){
+            dictTimer = setTimeout(function(){
+                dictBox.addClass("dict_hide");
+            }, 3000);
+        });
+        
+        // 关闭浮动框
+        $(".title_div .close", dictBox).click(function(){
+            dictBox.addClass("dict_hide");
+        });
+        dictBox.addClass("fix_box"); // 普通网页中固定位置
+        $("html").append(dictBox);
+        
+    }
+    // pop 窗口的初始化
+    _.initPop = function(){
+        dictBox.removeClass("dict_hide");
+        dictBox.find(".title_div").addClass("dict_hide")
+        $("#pop_box").append(dictBox);
     }
 
 
@@ -129,7 +150,3 @@
 }).call(this);
 
 
-
-
-DictionaryView.init(window);
-DictionaryView.loadPage();

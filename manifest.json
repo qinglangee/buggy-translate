@@ -29,9 +29,10 @@
       "matches": ["<all_urls>"],
       "js": ["lib/jquery-3.2.1.min.js",
         "src/string_utils.js",
-        "src/commons.js",
+        "src/zhchlog.js",
         "src/dict_view.js",
-        "src/dictionary.js"],
+        "src/dictionary.js",
+        "src/init.js"],
       "css": ["src/dictionary.css"]
     }
   ],

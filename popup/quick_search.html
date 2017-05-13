@@ -3,18 +3,27 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="../src/dictionary.css">
+    <link rel="stylesheet" href="quick_search.css">
   </head>
 
   <body>
 
-    <form>
-        <input type="text" id="color" ><button type="submit">查询</button>
-        <div id="result"></div>
-    </form>
+        <!--
+    -->
+    <input type="text" id="search_input" ><span type="button" id="search_btn" >查询</span>
+    <div id="result"></div>
+    <div id="pop_box">
+        
+    </div>
 
-    <script src="../jquery-3.2.1.min.js"></script>
-    <script src="quick_search.js"></script>
 
   </body>
+  <script src="../lib/jquery-3.2.1.min.js"></script>
+  <script src="../src/string_utils.js"></script>
+  <script src="../src/zhchlog.js"></script>
+  <script src="../src/dict_view.js"></script>
+  <script src="../src/dictionary.js"></script>
+  <script src="quick_search.js"></script>
 
 </html>
