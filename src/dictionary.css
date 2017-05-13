@@ -5,6 +5,8 @@
     border-radius:10px;
     padding:10px;
     font-family: sans-serif;
+    font-size: 16px;
+    color: #9DA5B4;
 }
 .fix_box{position:fixed;}
 .clear{clear:both;}

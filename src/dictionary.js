@@ -54,6 +54,8 @@
     // 查询单词
     _.searchWord = function(text, isPop){
         L.debug("search text:" + text);
+        View.showMsg("正在查词:" + text + "...");
+        
         var url = "http://dict.youdao.com/search";
         var data = {"keyfrom":"dict.index","q":text};
         $.get(url,data, function(html){

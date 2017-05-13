@@ -21,23 +21,39 @@
     var dictTimer;
     var mouseInDict = false;
     var winTop = null;
-    _.init = function(wnd){
+    var G = {};
+    G.isPop = false; // 记录是在弹出窗口还是普通页面
+    _.init = function(wnd, isPop){
         winTop = wnd;
+        G.isPop = isPop
     }
-
-    // 显示单词释义，定时后隐藏
-    _.showWord = function(word, isPop){
-        L.debug("inshow:", dictBox);
-        dictBox.removeClass("dict_hide");
-        _.fillDictContent(word);
+    // 启动关闭浮动框的计时器
+    function startTimer(){
+        
         if(dictTimer != null){
             clearTimeout(dictTimer);
         }
-        if(!isPop){
+        if(!G.isPop){
             dictTimer = setTimeout(function(){
                 dictBox.addClass("dict_hide");
             }, 9000);
         }
+    }
+
+    // 显示单词释义，定时后隐藏
+    _.showWord = function(word){
+        L.debug("fun showWord:", dictBox);
+        dictBox.removeClass("dict_hide");
+        _.fillDictContent(word);
+        startTimer();
+    }
+    // 显示正在查词，定时后隐藏
+    _.showMsg = function(msg){
+        L.debug("fun showMsg:", msg);
+        _.clearDictContent();
+        dictBox.removeClass("dict_hide");
+        dictRef.msg.html(msg);
+        startTimer();
     }
 
     // 单词内容填充页面
@@ -67,13 +83,14 @@
     }
     // 清空浮动框显示内容
     _.clearDictContent = function(){
+        dictRef.msg.html("");
         dictRef.text.html("");
         dictRef.pronounce.html("");
         dictRef.translate.html("");
     }
 
     // 加载页面内容
-    _.loadPage = function(isPop){
+    _.loadPage = function(){
         var viewUrl = browser.runtime.getURL("html/component.html");
         L.debug("viewUrl:", viewUrl);
         $.get(viewUrl, function(resp){
@@ -82,13 +99,13 @@
             L.debug("all:", all)
             dictBox = all.find("#buggy_dict_box");
 
+            dictRef.msg = dictBox.find("#msg");
             dictRef.text = dictBox.find(".text");
             dictRef.pronounce = dictBox.find(".pronounce");
             dictRef.translate = dictBox.find(".translate");
             L.debug("dict box:", dictBox);
 
-            
-            if(isPop){
+            if(G.isPop){
                 _.initPop();
             }else{
                 _.initPage();

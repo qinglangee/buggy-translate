@@ -1,6 +1,6 @@
 
-DictionaryView.init(window);
-DictionaryView.loadPage(true);
+DictionaryView.init(window, true);
+DictionaryView.loadPage();
 
 function quickSearch(){
     var word = $("#search_input").val();
@@ -17,4 +17,7 @@ $("#search_input").on("keyup", function(e){
     if(key == 13){
         quickSearch();
     }
-})
+});
+setTimeout(function(){
+    $("#search_input").focus();
+}, 200);
