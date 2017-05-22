@@ -19,7 +19,7 @@
     var WARN = 3;
     var ERROR = 4;
 
-    var logLevel = DEBUG;
+    var logLevel = INFO;
 
     _.debug = function(content){
         if(logLevel <= DEBUG){
