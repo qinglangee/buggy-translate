@@ -1,7 +1,7 @@
 # buggy-translate
 a browser extension to translate words selected in  page
 
-一个火狐扩展，用来在页面上进行选择查词．
+这是一个翻译单词的浏览器扩展．看网页时用鼠标选中一个单词，然后插件会在一个浮动框中显示翻译结果．
 
 
 ## build
