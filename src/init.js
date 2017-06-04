@@ -9,7 +9,7 @@ Dictionary.init();
 // 启动插件监听
 // $("body").on("click", checkSelection);
 $(document).on("click", function(e){
-    DictionaryView.mouse(e.clientX, e.clientY);
+    DictionaryView.mouse(e.clientX, e.clientY, e);
     Dictionary.checkSelection(window);
 });
 
@@ -17,7 +17,7 @@ $(document).on("click", function(e){
 for (var i = 0; i < window.frames.length; i++){
     var thisFrame = window.frames[i];
     $(window.frames[i].document).on("click", function(e){
-        DictionaryView.mouse(e.clientX, e.clientY);
+        DictionaryView.mouse(e.clientX, e.clientY, e);
         Dictionary.checkSelection(thisFrame);
     })
 }

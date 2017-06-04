@@ -174,9 +174,14 @@
     }
     
     // 记录鼠标位置
-    _.mouse = function(x, y){
+    _.mouse = function(x, y, ele){
         G.mouse.x = x;
         G.mouse.y = y;
+        G.mouse.ele = ele;
+    }
+    
+    _.getG = function(){
+        return G;
     }
 
 

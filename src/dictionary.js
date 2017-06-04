@@ -34,7 +34,19 @@
 
     // 检查是否要查字典
     _.checkSelection = function(winClick){
-        var text = _.getSelectedText(winClick);
+        var text = "";
+        try{
+            var target = View.getG().mouse.ele.target;
+            // 如果是input textarea之类的，FF中用 window.getSelection 取不到，所以提前用它们的方法取值
+            if(target.value != null){
+                text = target.value.substring(target.selectionStart, target.selectionEnd);
+            }
+        }catch(err){
+            // 一般不会出错，　出错也不理它就好了
+        }
+        if(text == null || text.length == 0){
+            text = _.getSelectedText(winClick);
+        }
         L.debug("text is :" + text);
         if(text != null && text.length > 0){
             _.searchWord(text);
@@ -43,6 +55,7 @@
     // 取选中的文字
     _.getSelectedText = function(winClick){
         L.debug("chu dian shen a ")
+        // firefox中有 window.getSelection, 但是不返回　textarea 中的选中内容
         if(winClick.getSelection) {
             L.debug("window.getSelection")
             var selText = winClick.getSelection().toString();
