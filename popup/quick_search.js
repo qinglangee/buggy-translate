@@ -18,6 +18,9 @@ $("#search_input").on("keyup", function(e){
         quickSearch();
     }
 });
+$(".open_options").on("click", function(e){
+    browser.runtime.openOptionsPage();
+});
 setTimeout(function(){
     $("#search_input").focus();
 }, 200);

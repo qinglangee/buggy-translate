@@ -8,7 +8,7 @@ Dictionary.init();
 
 // 启动插件监听
 // $("body").on("click", checkSelection);
-$(document).on("click", function(e){
+$(document).on("mouseup", function(e){
     DictionaryView.mouse(e.clientX, e.clientY, e);
     Dictionary.checkSelection(window);
 });

@@ -24,7 +24,7 @@
     var G = {};
     G.mouse = {}; // 记录点击位置
     G.isPop = false; // 记录是在弹出窗口还是普通页面
-    G.atCorner = false; // true:在右上角显示，　否则鼠标旁边显示
+    G.atCorner = true; // true:在右上角显示，　否则鼠标旁边显示
     _.init = function(wnd, isPop){
         winTop = wnd;
         G.isPop = isPop

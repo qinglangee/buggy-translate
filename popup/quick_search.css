@@ -5,3 +5,16 @@ body{
 }
 #search_input{width:160px;height:20px;margin-right: 10px;}
 #search_btn{padding:2px 10px;color:#81915A;border: solid 1px;border-radius:4px;}
+
+.bottom_box_holder{width: 250px;height:20px;}
+.bottom_box{
+    position: fixed;
+    bottom:0px;
+    left: 0px;
+    height:30px;
+    width: 250px;
+    padding-top: 5px;
+    padding-left: 10px;
+    border-top:solid 1px #4B4943; 
+}
+.open_options img{width:25px;height:25px;}
