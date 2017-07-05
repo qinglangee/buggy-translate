@@ -30,6 +30,7 @@
         winTop = wnd;
         G.isPop = isPop
     }
+    G.box_is_showing = false;
     // 更新设置项
     _.setOptions = function(options){
         if(options != null){
@@ -54,6 +55,7 @@
     // 浮动框的定位和显示
     function showBox(){
         dictBox.removeClass("dict_hide");
+        G.box_is_showing = true;
         if(G.atCorner){
             dictBox.css({"top":"10px", "right":"10px", "left":""});
         }else{
@@ -63,6 +65,7 @@
     // 浮动框隐藏
     _.hideBox = function(){
         dictBox.addClass("dict_hide");
+        G.box_is_showing = false;
     }
 
     // 显示单词释义，定时后隐藏
@@ -155,13 +158,13 @@
             clearTimeout(dictTimer);
         }).mouseout(function(){
             dictTimer = setTimeout(function(){
-                dictBox.addClass("dict_hide");
+                _.hideBox();
             }, 3000);
         });
         
         // 关闭浮动框
         $(".title_div .close", dictBox).click(function(){
-            dictBox.addClass("dict_hide");
+            _.hideBox();
         });
         dictBox.addClass("fix_box"); // 普通网页中固定位置
         $("html").append(dictBox);

@@ -31,6 +31,7 @@
             data:{"q":"word"}
         }
     };
+    G.lastWord = "";
     
     // 正则匹配英文
     var englishReg = /^[-\w\s'\d\.]+$/;
@@ -63,7 +64,10 @@
         L.debug("after replace text is :" + text);
         
         if(text != null && text.length > 0){
-            _.searchWord(text);
+            if(!View.getG().box_is_showing || text != G.lastWord){
+                G.lastWord = text;
+                _.searchWord(text);
+            }
         }else{
             L.debug("View.getG().close_by_click:", View.getG().close_by_click)
             if(View.getG().close_by_click){
