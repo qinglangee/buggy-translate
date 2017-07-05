@@ -31,6 +31,11 @@
             data:{"q":"word"}
         }
     };
+    
+    // 正则匹配英文
+    var englishReg = /^[-\w\s'\d\.]+$/;
+    // 正则匹配非英文
+    var notEnglishReg = /[^-\w\s'\d\.]+/g;
 
 
     // 检查是否要查字典
@@ -49,6 +54,14 @@
             text = _.getSelectedText(winClick);
         }
         L.debug("text is :" + text);
+        // 只处理英文
+        if(!englishReg.test(text)){
+            text = text.replace(notEnglishReg, "");
+        }
+        text = St.trim(text);
+        
+        L.debug("after replace text is :" + text);
+        
         if(text != null && text.length > 0){
             _.searchWord(text);
         }else{
