@@ -25,6 +25,7 @@
     G.mouse = {}; // 记录点击位置
     G.isPop = false; // 记录是在弹出窗口还是普通页面
     G.atCorner = true; // true:在右上角显示，　否则鼠标旁边显示
+    G.close_by_click = false; // true: 点击空白片关闭单词框
     _.init = function(wnd, isPop){
         winTop = wnd;
         G.isPop = isPop
@@ -45,7 +46,7 @@
         }
         if(!G.isPop){
             dictTimer = setTimeout(function(){
-                hideBox();
+                _.hideBox();
             }, 9000);
         }
     }
@@ -60,7 +61,7 @@
         }
     }
     // 浮动框隐藏
-    function hideBox(){
+    _.hideBox = function(){
         dictBox.addClass("dict_hide");
     }
 

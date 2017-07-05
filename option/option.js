@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", restoreOptions);
 $(".single_choice").on("click", function(){
     var ele = $(this);
     var key = ele.attr("name");
-    var value = ele.attr("id")
+    var value = ele.val()
     L.debug("select option:",key, value);
     saveSingleChoice(key, value);
 });

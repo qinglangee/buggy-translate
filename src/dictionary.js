@@ -14,6 +14,7 @@
     };
 
 
+    // 词典的主要逻辑
     
     var St = StringUtils;
     var L = ZhchLog;
@@ -50,6 +51,11 @@
         L.debug("text is :" + text);
         if(text != null && text.length > 0){
             _.searchWord(text);
+        }else{
+            L.debug("View.getG().close_by_click:", View.getG().close_by_click)
+            if(View.getG().close_by_click){
+                View.hideBox();
+            }
         }
     }
     // 取选中的文字
@@ -179,10 +185,10 @@
             L.debug("load single is ",single);
             G.api = single.api || G.api;
 
-            if(single.box_location != null){
-                var atCorner = "corner" == single.box_location;
-                View.setOptions({"atCorner":atCorner});
-            }
+            var options = {};
+            options["atCorner"] = !("nearby" == single.box_location); // 默认是true
+            options["close_by_click"] = single.close_by_click == "yes"; // 默认是false
+            View.setOptions(options);
         }
 
         var getting = browser.storage.local.get("single");
