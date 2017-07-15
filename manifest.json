@@ -32,7 +32,8 @@
                 "src/dict_view.js",
                 "src/dictionary.js",
                 "src/init.js"],
-            "css": ["src/dictionary.css"]
+            "css": ["src/dictionary.css"],
+            "run_at": "document_start"
         }
     ],
 

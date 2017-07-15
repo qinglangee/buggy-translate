@@ -14,7 +14,23 @@
     };
 
 
-    // 词典的主要逻辑
+    /** 
+    * 词典的主要逻辑
+    * 取词界面
+    * 1. document　页面内容取词
+    * 2. frame 中取词
+    * 3. textarea input　中取词
+    * 4. 
+    *
+    *
+    *
+    *
+    *
+    *
+    *
+    *
+    */
+    
     
     var St = StringUtils;
     var L = ZhchLog;
@@ -60,6 +76,11 @@
             text = text.replace(notEnglishReg, "");
         }
         text = St.trim(text);
+        
+        // 数字不处理
+        if(/^\d+$/.test(text)){
+            text = "";
+        }
         
         L.debug("after replace text is :" + text);
         
