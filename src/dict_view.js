@@ -67,6 +67,36 @@
         dictBox.addClass("dict_hide");
         G.box_is_showing = false;
     }
+    _.handleClick = function(){
+        L.debug("View.getG().close_by_click:", G.close_by_click)
+        if(G.close_by_click){
+            var inDictBox = isClickDictBox();
+            if(!inDictBox){
+                _.hideBox();
+            }
+        }
+    }
+    
+    // 判断点击坐标是否是在 dictBox 中
+    function isClickDictBox(){
+        try{
+            var l = parseInt(dictBox.css("left").replace("px", "")) || 99999;
+            var t = parseInt(dictBox.css("top")) || 99999;
+            var w = parseInt(dictBox.css("width")) || 99999;
+            var h = parseInt(dictBox.css("height")) || 99999;
+            var x = G.mouse.x;
+            var y = G.mouse.y;
+            L.debug("view click: x " + x + " y " + y + " l " + l + " t " + t + " w " + w + " h " + h);
+            if(x > l && x < l+w && y > t && y < t+h){
+                return true;
+            }else{
+                return false;
+            }
+        }catch(e){
+            L.error(e);
+            return false;
+        }
+    }
 
     // 显示单词释义，定时后隐藏
     _.showWord = function(word){

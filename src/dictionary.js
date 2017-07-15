@@ -90,10 +90,7 @@
                 _.searchWord(text);
             }
         }else{
-            L.debug("View.getG().close_by_click:", View.getG().close_by_click)
-            if(View.getG().close_by_click){
-                View.hideBox();
-            }
+            View.handleClick();
         }
     }
     // 取选中的文字
