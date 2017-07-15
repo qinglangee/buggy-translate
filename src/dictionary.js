@@ -22,8 +22,8 @@
     * 3. textarea input　中取词
     * 4. 
     *
-    *
-    *
+    * 其他功能
+    * 1. 设置选项
     *
     *
     *
@@ -123,10 +123,6 @@
     // 查询单词
     _.searchWord = function(text, isPop){
         L.debug("search text:" + text);
-        
-        // TODO 无法获得配置更新信息，只好先每次都重新读取
-        loadOptions();
-        
         
         View.showMsg("正在查词:" + text + "...");
         
@@ -236,12 +232,12 @@
     _.init = function(){
         loadOptions();
         
-        // TODO 暂时通信失败
-        // browser.runtime.onMessage.addListener(function(message){
-        //     if(message.type == "change_option"){
-        //         loadOptions();
-        //     }
-        // });
+        browser.runtime.onMessage.addListener(function(message){
+            if(message.type == "change_option"){
+                L.debug("get a message, reload options.");
+                loadOptions();
+            }
+        });
     }
 
 

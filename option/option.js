@@ -16,14 +16,34 @@ function saveSingleChoice(key, value) {
     }
 }
 
+// 错误处理
+function onError(error) {
+    L.error(`Error: ${error}`);
+}
+// 向指定tabs发送消息
+function sendMessageToTabs(tabs) {
+    for (let tab of tabs) {
+        browser.tabs.sendMessage(
+            tab.id,
+            {"type":"change_option"}
+        ).then(response => {
+            L.debug("Message from the content script:");
+            // console.log(response.response);
+        }).catch(onError);
+    }
+}
+
 function saveOptions(key, value) {
     var option = {};
     option[key] = value;
     setPromise = browser.storage.local.set(option);
-    // TODO 与dictionary.js 通信失败
-    // setPromise.then(function(){
-    //     browser.runtime.sendMessage({"type":"change_option"});
-    // });
+    setPromise.then(function(){
+        L.debug("send a message for save options.");
+        browser.tabs.query({
+            currentWindow: true,
+            url: ["<all_urls>"]
+        }).then(sendMessageToTabs).catch(onError);
+    });
 }
 
 function restoreOptions() {
