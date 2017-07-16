@@ -15,7 +15,9 @@
 
     var L = ZhchLog;
 
-    var dictBox;
+    var dictBox;  // 单词显示浮动框
+    var COM = {}; // 各种组件原型的引用
+    var RES = {}; // 各种需要加载的web资源
     var dictRef={}; // 持有各个组件的引用
     var pastBox;
     var dictTimer;
@@ -121,13 +123,26 @@
         dictRef.text.html(word.text);
 
         // 发音
-        if(word.pronounce.length > 0){
-            var pronStr = "";
-            for(var i=0;i<word.pronounce.length;i++){
-                var pron = word.pronounce[i];
-                pronStr += pron.name + pron.text;
+        if(word.pronounces.length > 0){
+            var pronEles = $("<div></div>");
+            for(var i=0;i<word.pronounces.length;i++){
+                var pron = word.pronounces[i];
+                pronEle = $("<div><span class='pron_text'>" + pron.name + pron.text + "</span></div>");
+                
+                // 单词音频
+                if(pron.audio){
+                    pronAudio = COM.pronAudio.clone();
+                    L.debug("audio is ", pron.audio);
+                    pronAudio.find("audio").attr("src", pron.audio);
+                    pronAudio.find("a").click(function(){
+                        $(this).prev()[0].play();
+                    });
+                    pronEle.append(pronAudio);
+                }
+                pronEle.append($("<div class='clear'></div>"));
+                pronEles.append(pronEle);
             }
-            dictRef.pronounce.html(pronStr);
+            dictRef.pronounce.html(pronEles);
         }
 
         // 翻译
@@ -149,6 +164,10 @@
 
     // 加载页面内容
     _.loadPage = function(){
+        // 获取各种资源的链接
+        RES.imgs = {};
+        RES.imgs.remind = browser.runtime.getURL("imgs/remind.png");
+        
         var viewUrl = browser.runtime.getURL("html/component.html");
         L.debug("viewUrl:", viewUrl);
         $.get(viewUrl, function(resp){
@@ -162,6 +181,9 @@
             dictRef.pronounce = dictBox.find(".pronounce");
             dictRef.translate = dictBox.find(".translate");
             L.debug("dict box:", dictBox);
+            
+            COM.pronAudio = all.find("#pron_audio").find("span"); // 发音的音频显示组件
+            COM.pronAudio.find("img").attr("src", RES.imgs.remind);
 
             if(G.isPop){
                 _.initPop();

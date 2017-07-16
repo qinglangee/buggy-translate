@@ -32,10 +32,4 @@ for (var i = 0; i < window.frames.length; i++){
 }
 
 
-browser.runtime.onMessage.addListener(function(message){
-    console.log("gagagagagagga")
-    if(message.type == "change_option"){
-    }
-});
-
 /*"scripts": ["src/background-script.js"]*/

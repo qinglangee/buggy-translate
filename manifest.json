@@ -2,7 +2,7 @@
 
     "manifest_version": 2,
     "name": "buggy-translate",
-    "version": "0.1.7",
+    "version": "0.1.8",
 
     "description": "a browser extension to translate words selected in  page",
     "homepage_url": "https://github.com/qinglangee/buggy-translate",
@@ -49,7 +49,8 @@
     },
 
     "web_accessible_resources": [
-        "html/component.html"
+        "html/component.html",
+        "imgs/remind.png"
     ]
 
 }

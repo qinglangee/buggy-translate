@@ -6,3 +6,9 @@ a browser extension to translate words selected in  page
 
 ## build
 web-ext build
+
+## 致谢
+感谢以下的开源项目，让软件的开发更加的方便  
+[WebExtensions](https://wiki.mozilla.org/WebExtensions)  
+[jQuery](http://jquery.com/)  
+[阿里巴巴矢量图标库](http://www.iconfont.cn/)  

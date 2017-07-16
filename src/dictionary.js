@@ -139,6 +139,8 @@
             return parseBingWord(html);
         }
     }
+    
+    // 解析 Bing 返回的单词页面
     function parseBingWord(htmlStr){
         var html = $(htmlStr);
         var container = html.find(".qdef");
@@ -146,21 +148,32 @@
         var headword = container.find("#headword h1");
         var text = St.trim(headword.text());
         // 发音
-        var pronounce = [];
+        var pronounces = [];
+        
+        // 解析音标和音频的函数
+        var parseBingPron = function(pronounces, usPronEle){
+            var audioReg = /(https.*mp3)/;
+            if(usPronEle.length > 0 && usPronEle.text().indexOf("[") > 0){
+                var usText = usPronEle.text();
+                var usName = usText.substring(0,usText.indexOf("["));
+                var usPron = usText.substring(usText.indexOf("["));
+                var pronounce = {"name":usName, "text":usPron};
+                var usAudio = usPronEle.next(".hd_tf");
+                if(usAudio.length > 0){
+                    var clickAttr = usAudio.find("a").attr("onclick");
+                    if(audioReg.test(clickAttr)){
+                        L.debug(clickAttr.match(audioReg));
+                        pronounce.audio = clickAttr.match(audioReg)[0];
+                    }
+                }
+                pronounces[pronounces.length] = pronounce;
+            }
+        }
+        
         // 美音
-        var usText = container.find(".hd_prUS").text();
-        if(usText.indexOf("[") > 0){
-            var usName = usText.substring(0,usText.indexOf("["));
-            var usPron = usText.substring(usText.indexOf("["));
-            pronounce[pronounce.length] = {"name":usName, "text":usPron};
-        }
+        parseBingPron(pronounces, container.find(".hd_prUS"));
         // 英音
-        var ukText = container.find(".hd_pr").text();
-        if(ukText.indexOf("[") > 0){
-            var ukName = ukText.substring(0,ukText.indexOf("["));
-            var ukPron = ukText.substring(ukText.indexOf("["));
-            pronounce[pronounce.length] = {"name":ukName, "text":ukPron};
-        }
+        parseBingPron(pronounces, container.find(".hd_pr"));
         // 解释
         var translate = [];
         var transText = container.find("ul>li");
@@ -169,25 +182,25 @@
         }
         
         // word 数据结构
-        var word = {"text":text, "pronounce":pronounce, "translate":translate};
+        var word = {"text":text, "pronounces":pronounces, "translate":translate};
         return word;
     }
 
-    // 从页面解析出单词数据
+    // 从有道单词页面解析出单词数据
     function parseYoudaoWord(htmlStr){
         var html = $(htmlStr);
         // 单词
         var keyword = html.find(".keyword");
         var text = St.trim(keyword.text());
         // 发音
-        var pronounce = [];
+        var pronounces = [];
         var pronName = html.find(".pronounce");
         var pronText = html.find(".phonetic")
         for(var i=0; i< pronName.length;i++){
             $(pronText).remove();
             var pronNameValue = $(pronName[i]).text()
             var pron = {"name":St.trim(pronNameValue), "text":St.trim($(pronText[i]).text())};
-            pronounce[pronounce.length] = pron;
+            pronounces[pronounces.length] = pron;
         }
         // 解释
         var translate = [];
@@ -197,7 +210,7 @@
         }
 
         // word 数据结构
-        var word = {"text":text, "pronounce":pronounce, "translate":translate};
+        var word = {"text":text, "pronounces":pronounces, "translate":translate};
         return word;
     }
 

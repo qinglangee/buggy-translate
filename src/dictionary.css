@@ -10,10 +10,15 @@
 }
 .fix_box{position:fixed;}
 .clear{clear:both;}
+
+.dict_hide{display:none}
 #buggy_dict_box .title_div{position:relative}
 #buggy_dict_box .title_div .title{color:#4B4943;position:float;float:left;font-size: 12px;}
 #buggy_dict_box .title_div .close{color:#ABA993;position:float;float:right;font-size: 12px;cursor: pointer;}
 #buggy_dict_box .text{color:#B89471;font-size: 18px;font-weight: bold;}
 #buggy_dict_box .pronounce{color:#81915A;font-size: 16px;}
+#buggy_dict_box .pronounce .pron_text{display: block;float:left;line-height:26px;}
+#buggy_dict_box .pronounce .pron_audio{display: block;float:left;line-height:25px;margin-left: 5px;}
+#buggy_dict_box .pronounce img{width:25px;height:25px;vertical-align: middle;}
 #buggy_dict_box .translate{color:#84A095;font-size: 16px;}
-.dict_hide{display:none}
+
