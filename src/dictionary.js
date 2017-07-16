@@ -204,7 +204,7 @@
             var pronAudioPre = "https://dict.youdao.com/dictvoice?type=";
             if("英" == pron["name"]){
                 pron.audio = pronAudioPre + "1" + "&audio=" + text;
-            }else if("美" == pron["name"]){
+            }else{
                 pron.audio = pronAudioPre + "2" + "&audio=" + text;
             }
             pronounces[pronounces.length] = pron;
