@@ -200,6 +200,13 @@
             $(pronText).remove();
             var pronNameValue = $(pronName[i]).text()
             var pron = {"name":St.trim(pronNameValue), "text":St.trim($(pronText[i]).text())};
+            
+            var pronAudioPre = "https://dict.youdao.com/dictvoice?type=";
+            if("英" == pron["name"]){
+                pron.audio = pronAudioPre + "1" + "&audio=" + text;
+            }else if("美" == pron["name"]){
+                pron.audio = pronAudioPre + "2" + "&audio=" + text;
+            }
             pronounces[pronounces.length] = pron;
         }
         // 解释
