@@ -28,11 +28,11 @@ function sendMessageToTabs(tabs) {
             {"type":"change_option"}
         ).then(response => {
             L.debug("Message from the content script:");
-            // console.log(response.response);
+            // L.debug(response.response);
         }).catch(onError);
     }
 }
-
+// 选项保存到storage中，发通知给本窗口的所有标签页
 function saveOptions(key, value) {
     var option = {};
     option[key] = value;
@@ -77,8 +77,8 @@ document.addEventListener("DOMContentLoaded", restoreOptions);
 // document.querySelector("input").addEventListener("change", ll);
 $(".single_choice").on("click", function(){
     var ele = $(this);
-    var key = ele.attr("name");
-    var value = ele.val()
+    var key = ele.attr("name"); // 单选项的name作为key
+    var value = ele.val(); // value 作为　value
     L.debug("select option:",key, value);
     saveSingleChoice(key, value);
 });

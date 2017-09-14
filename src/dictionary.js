@@ -23,7 +23,7 @@
     * 4. 
     *
     * 其他功能
-    * 1. 设置选项
+    * 1. 设置选项中各项的改变 
     *
     *
     *
@@ -49,8 +49,10 @@
     };
     G.lastWord = "";
     
-    // 正则匹配英文
+    // 正则匹配英文数字
     var englishReg = /^[-\w\s'\d\.]+$/;
+    // 正则匹配英文
+    var alphabetReg = /^[-\w\s'\.]+$/;
     // 正则匹配非英文
     var notEnglishReg = /[^-\w\s'\d\.]+/g;
 
@@ -71,6 +73,9 @@
             text = _.getSelectedText(winClick);
         }
         L.debug("text is :" + text);
+        if(text.length > 10 && !alphabetReg.test(text)){ // 长度大于１０且不是全英文的内容不处理
+            text = "";
+        }
         // 只处理英文
         if(!englishReg.test(text)){
             text = text.replace(notEnglishReg, "");
@@ -239,6 +244,10 @@
             var options = {};
             options["atCorner"] = !("nearby" == single.box_location); // 默认是true
             options["close_by_click"] = single.close_by_click == "yes"; // 默认是false
+            
+            if(single["theme"] != null){
+                options["theme"] = single.theme; // 主题
+            }
             View.setOptions(options);
         }
 

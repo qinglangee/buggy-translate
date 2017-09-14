@@ -20,8 +20,8 @@
     var ERROR = 4;
     var NONE = 5;
 
-    // var logLevel = DEBUG;
     var logLevel = NONE;
+    // logLevel = DEBUG;
 
     _.debug = function(content){
         if(logLevel <= DEBUG){

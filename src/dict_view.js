@@ -16,6 +16,7 @@
     var L = ZhchLog;
 
     var dictBox;  // 单词显示浮动框
+    var dictThemeBox; // 控制主题的层
     var COM = {}; // 各种组件原型的引用
     var RES = {}; // 各种需要加载的web资源
     var dictRef={}; // 持有各个组件的引用
@@ -28,6 +29,7 @@
     G.isPop = false; // 记录是在弹出窗口还是普通页面
     G.atCorner = true; // true:在右上角显示，　否则鼠标旁边显示
     G.close_by_click = false; // true: 点击空白片关闭单词框
+    G.theme = 'theme_black'; // 默认是黑色主题
     _.init = function(wnd, isPop){
         winTop = wnd;
         G.isPop = isPop
@@ -39,8 +41,14 @@
             for(var key in options){
                 G[key] = options[key];
             }
+            resetViewOptions();
             L.debug("set option, G is", G);
         }
+    }
+    // 设置改变后，重新设置可能改变的选项
+    function resetViewOptions(){
+        dictThemeBox.removeClass();
+        dictThemeBox.addClass(G.theme);
     }
     // 启动关闭浮动框的计时器
     function startTimer(){
@@ -175,6 +183,7 @@
             var all = $(resp);
             L.debug("all:", all)
             dictBox = all.find("#buggy_dict_box");
+            dictThemeBox = dictBox.find("#buggy_dict_theme_box");
 
             dictRef.msg = dictBox.find("#msg");
             dictRef.text = dictBox.find(".text");

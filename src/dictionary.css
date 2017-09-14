@@ -1,4 +1,4 @@
-#buggy_dict_box{
+#buggy_dict_theme_box{
     background-color:#1E1E1E;z-index:1000;
     top:10px;right:10px;
     max-width:350px;min-width:100px;min-height:100px;
@@ -22,3 +22,10 @@
 #buggy_dict_box .pronounce img{width:25px;height:25px;vertical-align: middle;}
 #buggy_dict_box .translate{color:#84A095;font-size: 16px;}
 
+/** theme white*/
+#buggy_dict_theme_box.theme_white{border:solid 3px #000000;}
+#buggy_dict_box .theme_white{background-color:#F9F9F9;color: #484848;}
+#buggy_dict_box .theme_white .title_div .title{color:#E0E0E0;}
+#buggy_dict_box .theme_white .text{color:#484848;}
+#buggy_dict_box .theme_white .pronounce{color:#0C02C0;}
+#buggy_dict_box .theme_white .translate{color:#242424;
