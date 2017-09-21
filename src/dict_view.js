@@ -30,6 +30,7 @@
     G.atCorner = true; // true:在右上角显示，　否则鼠标旁边显示
     G.close_by_click = false; // true: 点击空白片关闭单词框
     G.theme = 'theme_black'; // 默认是黑色主题
+    G.play_audio = 0; // 是否自动播放读音　0:不播放　1:播放第一个 2:播放第二个
     _.init = function(wnd, isPop){
         winTop = wnd;
         G.isPop = isPop
@@ -132,6 +133,7 @@
 
         // 发音
         if(word.pronounces.length > 0){
+            var playAudio = G.play_audio; // 播放读音的设置
             var pronEles = $("<div></div>");
             for(var i=0;i<word.pronounces.length;i++){
                 var pron = word.pronounces[i];
@@ -142,6 +144,12 @@
                     pronAudio = COM.pronAudio.clone();
                     L.debug("audio is ", pron.audio);
                     pronAudio.find("audio").attr("src", pron.audio);
+                    if(playAudio > 0){ // 自动播放读音，只放一个
+                        if(playAudio == i + 1 || word.pronounces.length == 1){
+                            L.debug("playAudio ", playAudio, " i:", i);
+                            pronAudio.find("audio").attr("autoplay", true);
+                        }
+                    }
                     pronAudio.find("a").click(function(){
                         $(this).prev()[0].play();
                     });

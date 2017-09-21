@@ -64,7 +64,11 @@
             var target = View.getG().mouse.ele.target;
             // 如果是input textarea之类的，FF中用 window.getSelection 取不到，所以提前用它们的方法取值
             if(target.value != null){
-                text = target.value.substring(target.selectionStart, target.selectionEnd);
+                var eleIsSelect = target.type.indexOf('select') >= 0;
+                L.debug("ele.target type:", target.type, " is select:", eleIsSelect);
+                if(!eleIsSelect){
+                    text = target.value.substring(target.selectionStart, target.selectionEnd);
+                }
             }
         }catch(err){
             // 一般不会出错，　出错也不理它就好了
@@ -248,6 +252,7 @@
             if(single["theme"] != null){
                 options["theme"] = single.theme; // 主题
             }
+            options["play_audio"] = single.play_audio || 0; // 默认不播放读音
             View.setOptions(options);
         }
 
