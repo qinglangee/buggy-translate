@@ -21,18 +21,18 @@
                 <tr>
                     <td>翻译结果显示位置:</td>
                     <td>
-                        <input class="single_choice" type="radio" name="box_location" id="corner" value="corner" checked="true"/>
+                        <input class="single_choice" type="radio" name="box_location" id="box_location_0" value="0" checked="true"/>
                         <lable for="corner">右上角</lable>
-                        <input class="single_choice" type="radio" name="box_location" id="nearby" value="nearby"/>
+                        <input class="single_choice" type="radio" name="box_location" id="box_location_1" value="1"/>
                         <lable for="nearby">单词旁边</lable>
                     </td>
                 </tr>
                 <tr>
                     <td>点击单词浮动框外区域是否关闭浮动框:</td>
                     <td>
-                        <input class="single_choice" type="radio" name="close_by_click" id="close_by_click_0" value="no" checked="true"/>
+                        <input class="single_choice" type="radio" name="close_by_click" id="close_by_click_0" value="0" checked="true"/>
                         <lable for="close_by_click_0">否</lable>
-                        <input class="single_choice" type="radio" name="close_by_click" id="close_by_click_1" value="yes"/>
+                        <input class="single_choice" type="radio" name="close_by_click" id="close_by_click_1" value="1"/>
                         <lable for="close_by_click_1">是</lable>
                     </td>
                 </tr>
@@ -54,6 +54,13 @@
                         <lable for="play_audio_1">播放第一个</lable>
                         <input class="single_choice" type="radio" name="play_audio" id="play_audio_2" value="2"/>
                         <lable for="play_audio_2">播放第二个</lable>
+                    </td>
+                </tr>
+                <tr>
+                    <td>浮动框显示时间:</td>
+                    <td>
+                        <input class="input_txt"  name="panel_show_time" id="panel_show_time" value="9" style="width:50px"/>
+                        <lable for="play_audio_0">秒(范围:1-100)</lable>
                     </td>
                 </tr>
             </table>

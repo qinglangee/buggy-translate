@@ -1,7 +1,7 @@
 var L = ZhchLog;
 
 // 保存单选的设置
-function saveSingleChoice(key, value) {
+function saveSingleValue(key, value) {
     var singlePromise = browser.storage.local.get("single");
     singlePromise.then(saveSingle);
     
@@ -72,13 +72,38 @@ function restoreOptions() {
     getting.then(setSingleChoice, onError);
 }
 
+// 存储文本输入框内容
+function saveInputTxt(){
+    $(".input_txt").each(function(){
+        var ele = $(this);
+        var key = ele.attr("name"); // 单选项的name作为key
+        var value = ele.val(); // value 作为　value
+        L.debug(key + ":" + value);
+        saveSingleValue(key, value);
+    });
+}
 
+// 页面加载完成事件
 document.addEventListener("DOMContentLoaded", restoreOptions);
-// document.querySelector("input").addEventListener("change", ll);
+
+// 处理单选框点击事件
 $(".single_choice").on("click", function(){
     var ele = $(this);
     var key = ele.attr("name"); // 单选项的name作为key
     var value = ele.val(); // value 作为　value
     L.debug("select option:",key, value);
-    saveSingleChoice(key, value);
+    saveSingleValue(key, value);
 });
+
+// 处理文本输入事件
+$(".input_txt").on("blur", function(){
+    var ele = $(this);
+    // 先判断是数字, 并且范围是 0 < x < 101
+    if(/^\d+$/.test(ele.val()) && ele.val() > 0 && ele.val() < 101){ 
+        saveInputTxt();
+    }else{
+        ele.val(9);
+    }
+})
+
+

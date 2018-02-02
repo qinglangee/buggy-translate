@@ -27,10 +27,11 @@
     var G = {};
     G.mouse = {}; // 记录点击位置
     G.isPop = false; // 记录是在弹出窗口还是普通页面
-    G.atCorner = true; // true:在右上角显示，　否则鼠标旁边显示
-    G.close_by_click = false; // true: 点击空白片关闭单词框
+    G.box_location = 0; // 0:在右上角显示，1:鼠标旁边显示
+    G.close_by_click = 0; // 0: 点击空白不关闭单词框 1: 点击空白关闭单词框
     G.theme = 'theme_black'; // 默认是黑色主题
     G.play_audio = 0; // 是否自动播放读音　0:不播放　1:播放第一个 2:播放第二个
+    G.panel_show_time = 9; // 浮动框自动消失的时间，单位为秒
     _.init = function(wnd, isPop){
         winTop = wnd;
         G.isPop = isPop
@@ -59,7 +60,7 @@
         if(!G.isPop){
             dictTimer = setTimeout(function(){
                 _.hideBox();
-            }, 9000);
+            }, G.panel_show_time * 1000);
         }
     }
     
@@ -67,9 +68,11 @@
     function showBox(){
         dictBox.removeClass("dict_hide");
         G.box_is_showing = true;
-        if(G.atCorner){
+        if(G.box_location == 0){
+            // L.debug("box location : at corner " + G.box_location);
             dictBox.css({"top":"10px", "right":"10px", "left":""});
         }else{
+            // L.debug("box location : nearby word " + G.box_location);
             dictBox.css({"top":G.mouse.y + "px", "left":G.mouse.x + "px", "right":""});
         }
     }
@@ -80,7 +83,7 @@
     }
     _.handleClick = function(){
         L.debug("View.getG().close_by_click:", G.close_by_click)
-        if(G.close_by_click){
+        if(G.close_by_click == 1){
             var inDictBox = isClickDictBox();
             if(!inDictBox){
                 _.hideBox();

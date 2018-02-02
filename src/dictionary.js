@@ -238,21 +238,19 @@
         }
 
         function onGot(item) {
-            var single = item.single;
-            if(single == null){
-                return;
-            }
-            L.debug("load single is ",single);
-            G.api = single.api || G.api;
-
             var options = {};
-            options["atCorner"] = !("nearby" == single.box_location); // 默认是true
-            options["close_by_click"] = single.close_by_click == "yes"; // 默认是false
             
-            if(single["theme"] != null){
-                options["theme"] = single.theme; // 主题
+            var single = item.single;
+            if(single != null){
+                L.debug("load single is ",single);
+                G.api = single.api || G.api;
+                
+                
+                for(var key in single){
+                    options[key] = single[key];
+                }
             }
-            options["play_audio"] = single.play_audio || 0; // 默认不播放读音
+            
             View.setOptions(options);
         }
 
