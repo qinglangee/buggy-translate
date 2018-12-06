@@ -35,8 +35,14 @@
     var St = StringUtils;
     var L = ZhchLog;
     var View = DictionaryView;
-    var G = {};
-    G.api = "youdao"; // 默认值为 youdao
+    /**
+     * 记录本脚本全局变量和配置页面的配置
+     */
+    var G = {}; // 有默认值的在下面一起设置
+    G.api = "youdao"; // 网查接口, 默认值为 youdao
+    G.lastWord = ""; // 最后一次查的词
+    G.only_word = 0; // 是否只查纯单词
+
     var API = {
         "youdao":{
             url:"http://dict.youdao.com/search",
@@ -47,7 +53,6 @@
             data:{"q":"word"}
         }
     };
-    G.lastWord = "";
     
     // 正则匹配英文数字
     var englishReg = /^[-\w\s'\d\.]+$/;
@@ -92,6 +97,11 @@
         }
         
         L.debug("after replace text is :" + text);
+
+        // 如果设置是只查单词,则有空白时不查
+        if(G.only_word == 1 && /\s/.test(text)){
+            text = "";
+        }
         
         if(text != null && text.length > 0){
             if(!View.getG().box_is_showing || text != G.lastWord){
@@ -242,12 +252,11 @@
             
             var single = item.single;
             if(single != null){
-                L.debug("load single is ",single);
-                G.api = single.api || G.api;
-                
+                L.debug("load single is ",single);                
                 
                 for(var key in single){
                     options[key] = single[key];
+                    G[key] = single[key];
                 }
             }
             

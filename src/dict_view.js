@@ -24,7 +24,7 @@
     var dictTimer;
     var mouseInDict = false;
     var winTop = null;
-    var G = {};
+    var G = {};  // 放置 dict_view 的全局变量, 而且记录选项页面的配置
     G.mouse = {}; // 记录点击位置
     G.isPop = false; // 记录是在弹出窗口还是普通页面
     G.box_location = 0; // 0:在右上角显示，1:鼠标旁边显示
